@@ -47,6 +47,7 @@ void Hardware_Init(void)
 	
 	Beep_Init();									//蜂鸣器初始化
 	
+	Touch_Init();                                  //触摸开关初始化
 	//TIM3_Int_Init(7199,9999);//5Khz的计数频率，计数到5000为1000ms  !!减1
 	
 	UsartPrintf(USART_DEBUG, " Hardware init OK\r\n");
@@ -55,6 +56,8 @@ void Hardware_Init(void)
 
 int main(void)
 {
+	
+	
 	unsigned char *dataPtr = NULL;
 
 	//阿里云自定义用于和微信小程序进行通讯的Topic
@@ -66,8 +69,10 @@ int main(void)
 	unsigned short Led_status;
 	
 	Hardware_Init();				//初始化外围硬件
-	ESP8266_Init();					//初始化ESP8266
 
+	ESP8266_Init();					//初始化ESP8266
+	
+	
 	
 	while(ALiYun_DevLink())			//接入ALiYun
 		DelayXms(500);
