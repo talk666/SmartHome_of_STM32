@@ -41,3 +41,4 @@
 .\objects\mqtt.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\mqtt.o: .\hardware\LED.h
 .\objects\mqtt.o: .\hardware\Beep.h
+.\objects\mqtt.o: .\hardware\Relay.h

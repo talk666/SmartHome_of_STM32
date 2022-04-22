@@ -17,7 +17,7 @@ uint8_t Touch_GetStatus(void)
 	uint8_t status = 0 ;
 	if (1 == GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_7))//pc7默认低电平
 	{
-		DelayMs(100);//延时防止第二次判断
+		DelayMs(300);//延时防止第二次判断
 //	while(0 == GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_7));
 	//	DelayMs(20);
 		status = 1;

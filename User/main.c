@@ -6,7 +6,10 @@
 #include "touch.h"
 #include "Led.h"
 #include "Beep.h"
+#include "Relay.h"
 #include "TIM.h"
+#include "SHT31.h"
+
 #include <stdio.h>
 //网络设备驱动
 #include "esp_8266.h"
@@ -39,6 +42,8 @@ void Hardware_Init(void)
 	
 	Delay_Init();									//systick初始化
 	
+	I2C1_init();                                    //I2C1 进行初始化
+	
 	Usart1_Init(115200);							//串口1，打印信息用
 	
 	Usart2_Init(115200);							//串口2，驱动ESP8266用
@@ -48,6 +53,9 @@ void Hardware_Init(void)
 	Beep_Init();									//蜂鸣器初始化
 	
 	Touch_Init();                                  //触摸开关初始化
+	
+	Relay_Init();                                  //继电器初始化
+	
 	//TIM3_Int_Init(7199,9999);//5Khz的计数频率，计数到5000为1000ms  !!减1
 	
 	UsartPrintf(USART_DEBUG, " Hardware init OK\r\n");
@@ -57,7 +65,16 @@ void Hardware_Init(void)
 int main(void)
 {
 	
+#if 0
+	Hardware_Init();				//初始化外围硬件
+	float Rh_true = 0.0, Tmp_true = 0.0;
+while(1){
 	
+	GetDataFromSHT31(&Tmp_true, &Rh_true);
+	UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
+	DelayMs(500);
+}
+#else
 	unsigned char *dataPtr = NULL;
 
 	//阿里云自定义用于和微信小程序进行通讯的Topic
@@ -67,6 +84,8 @@ int main(void)
 	unsigned short timeCount = 0;	//发送间隔变量(心跳包)
 	unsigned short status;
 	unsigned short Led_status;
+	
+	float Rh_true = 0.0, Tmp_true = 0.0;//温湿度数据
 	
 	Hardware_Init();				//初始化外围硬件
 
@@ -98,14 +117,17 @@ int main(void)
 	{
 		if(++timeCount >= 450)									//发送间隔5s  
 		{
-			ALiYun_HeartBeat(&mqttPacket);
+			ALiYun_HeartBeat(&mqttPacket);			
 			timeCount = 0;
 			ESP8266_Clear();
 
 		}
 		if(timeCount%150 == 0){
 			Led_status = GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_0);//led的电平状态
-			sprintf(pPayLoad_cap_control,"{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f}",!Led_status,11.12);
+			GetDataFromSHT31(&Tmp_true, &Rh_true); //温湿度状态
+			UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
+			
+			sprintf(pPayLoad_cap_control,"{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f,\"RelativeHumidity\": %.2f}",!Led_status,Tmp_true,Rh_true);
 			ALiYun_Publish(topics_cap_control[0], pPayLoad_cap_control);
 			ESP8266_Clear();
 			
@@ -135,10 +157,13 @@ int main(void)
 		status = Touch_GetStatus();
 		if(status == 1){
 			LED2_Turn();
+			Relay_Turn();
 		}
 		
 		DelayXms(5);
 	}
+	
+#endif
 	
 }
 

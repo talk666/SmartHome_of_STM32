@@ -32,6 +32,8 @@
 ".\objects\touch.o"
 ".\objects\uart.o"
 ".\objects\beep.o"
+".\objects\relay.o"
+".\objects\sht31.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\esp_8266.o"

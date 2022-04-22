@@ -43,6 +43,7 @@
 //Ó²¼þ
 #include "LED.h"
 #include "Beep.h"
+#include "Relay.h"
 
 extern unsigned char esp8266_buf[128];
 
@@ -242,10 +243,12 @@ void ALiYun_RevPro(unsigned char *cmd)
 						{
 							//¿ªµÆ
 							LED2_ON();
+							Relay_ON();
 							
 						}else{
 							//¹ØµÆ
 							LED2_OFF();
+							Relay_OFF();
 						}
 					}
 					if(json_value_Beep){

@@ -725,6 +725,26 @@
               <FileType>5</FileType>
               <FilePath>.\hardware\Beep.h</FilePath>
             </File>
+            <File>
+              <FileName>relay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hardware\relay.c</FilePath>
+            </File>
+            <File>
+              <FileName>relay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hardware\relay.h</FilePath>
+            </File>
+            <File>
+              <FileName>SHT31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hardware\SHT31.c</FilePath>
+            </File>
+            <File>
+              <FileName>SHT31.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hardware\SHT31.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

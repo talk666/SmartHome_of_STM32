@@ -206,54 +206,6 @@ void USART1_IRQHandler(void)
 
 }
 
-//uart4暂时配置失败
-void Usart4_Init(void)
-{
-	
-	GPIO_InitTypeDef GpioInitStructure; //初始化GPIO结构体命名
-	USART_InitTypeDef UsartInitStructure;//初始化USART结构体命名
-	NVIC_InitTypeDef NVIC_InitStructure;//初始化NVIC
-	
-	//2. 配置时钟：GPIO口的时钟，引脚复用的时钟，串口的时钟
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
-	//3.先配置Rx输出引脚io（pc10）
-	GpioInitStructure.GPIO_Mode  = GPIO_Mode_IN_FLOATING;//复用推挽输出
-	GpioInitStructure.GPIO_Pin   = GPIO_Pin_10;
-	GpioInitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	
-	GPIO_Init(GPIOC,&GpioInitStructure);
-	
-	//4.再配置Tx输出引脚io（pc11）
-	GpioInitStructure.GPIO_Mode  = GPIO_Mode_IN_FLOATING;//浮空输入
-	GpioInitStructure.GPIO_Pin   = GPIO_Pin_11;
-	GPIO_Init(GPIOC,&GpioInitStructure);
-	//是否配置中断
-#if 1
-	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;//IRQ通道使能
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-	
-	NVIC_Init(&NVIC_InitStructure);
-#endif
-	//5.串口结构体的配置
-	UsartInitStructure.USART_BaudRate =   115200;        //波特率
-	UsartInitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;   //硬件流
-	UsartInitStructure.USART_Mode = USART_Mode_Rx| USART_Mode_Tx;					//模式
-	UsartInitStructure.USART_Parity = USART_Parity_No;						//校验位
-	UsartInitStructure.USART_StopBits =	USART_StopBits_1;					//停止位
-	UsartInitStructure.USART_WordLength =	USART_WordLength_8b;				//字节长度
-	
-	USART_Init(UART4, &UsartInitStructure);
-//中断开启
-#if 1
-	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
-#endif
-	//7.打开串口1
-	USART_Cmd(UART4, ENABLE);//打开串口 比配置GPIO多这一步
-	
-}
 
 //发送字符函数
 void USARTSendByte(USART_TypeDef* USARTx, uint16_t Data)
@@ -289,38 +241,4 @@ int fgetc(FILE *f)
 		return (int) USART_ReceiveData(USART1);
 //接受用rxne，输入用txe
 }
-#if 0
-#define QUEUE_MSG_LEN 16
-u8 usart_rx_buf[QUEUE_MSG_LEN];//接收数据最大值
-s16 usart_rx_len = 0;
-
-u8 uart1 = 0;
-//串口1接收中断函数
-void USART1_IRQHandler(void)
-{
-	//printf("USART1_IRQHandler\n");
-	char re_data=0;//为了接收字符，还是定义为字符类型吧
-	if(USART_GetFlagStatus(USART1,USART_FLAG_RXNE)==1)//确认下是不是串口1接收中断
-	{
-		re_data=USART_ReceiveData(USART1);	//接收数据
-		//USART_SendData(USART1,re_data);			//发送数据
-		USART_SendData(UART4,re_data);			//发送数据
-		while(USART_GetFlagStatus(USART1, USART_FLAG_TC)==RESET); //等待数据发送完 成
-	}	 
-	//这个中断是不需要手动清除标志位的，因为读取数据后接收标志位会自动清零
-}
-//串口4接收中断函数
-void UART4_IRQHandler(void)
-{	
-	printf("USART4_IRQHandler\r\n");
-	char re_data=0;//为了接收字符，还是定义为字符类型吧
-	if(USART_GetFlagStatus(UART4,USART_FLAG_RXNE)==1)//确认下是不是串口1接收中断
-	{
-		re_data=USART_ReceiveData(UART4);	//接收数据
-		USART_SendData(USART1,re_data);		//发送数据
-		while(USART_GetFlagStatus(UART4, USART_FLAG_TC)==RESET); //等待数据发送完 成
-	}	 
-	//这个中断是不需要手动清除标志位的，因为读取数据后接收标志位会自动清零
-}
-#endif
 
