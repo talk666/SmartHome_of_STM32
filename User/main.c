@@ -9,6 +9,7 @@
 #include "Relay.h"
 #include "TIM.h"
 #include "SHT31.h"
+#include "LCD.h"
 
 #include <stdio.h>
 //网络设备驱动
@@ -50,6 +51,8 @@ void Hardware_Init(void)
 									
 	LED_Init();										//LED2初始化
 	
+	LCD_Init();                                    //LCD  tft1.8 初始化
+	
 	Beep_Init();									//蜂鸣器初始化
 	
 	Touch_Init();                                  //触摸开关初始化
@@ -64,16 +67,17 @@ void Hardware_Init(void)
 
 int main(void)
 {
-	
-#if 0
+#if 0    //测试分支
 	Hardware_Init();				//初始化外围硬件
 	float Rh_true = 0.0, Tmp_true = 0.0;
-while(1){
 	
-	GetDataFromSHT31(&Tmp_true, &Rh_true);
-	UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
-	DelayMs(500);
-}
+	while(1){
+		
+		GetDataFromSHT31(&Tmp_true, &Rh_true);
+		TMP_RH_INFO(Tmp_true, Rh_true);
+		UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
+		DelayMs(500);
+	}
 #else
 	unsigned char *dataPtr = NULL;
 
@@ -125,6 +129,7 @@ while(1){
 		if(timeCount%150 == 0){
 			Led_status = GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_0);//led的电平状态
 			GetDataFromSHT31(&Tmp_true, &Rh_true); //温湿度状态
+			TMP_RH_INFO(Tmp_true, Rh_true);//LCD显示
 			UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
 			
 			sprintf(pPayLoad_cap_control,"{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f,\"RelativeHumidity\": %.2f}",!Led_status,Tmp_true,Rh_true);
@@ -147,9 +152,8 @@ while(1){
 			while(ALiYun_DevLink())			//接入ALiYun
 				DelayXms(500);
 	
-			Beep_Flag(15);
-			LED2_Flag(50);                  //循环快速闪烁4s
-
+			Beep_Flag(45); //长响代表重新连接成功
+			
 			ALiYun_Subscribe(topics_cap_control, 1);   //订阅主题
 			Beat_fail_num = 0;
 		}

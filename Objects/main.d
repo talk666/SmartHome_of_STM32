@@ -38,6 +38,7 @@
 .\objects\main.o: .\hardware\Relay.h
 .\objects\main.o: .\System\TIM.h
 .\objects\main.o: .\hardware\SHT31.h
+.\objects\main.o: .\LCD\LCD.h
 .\objects\main.o: .\Net\esp_8266.h
 .\objects\main.o: .\Net\Mqtt.h
 .\objects\main.o: .\Net\MqttKit.h

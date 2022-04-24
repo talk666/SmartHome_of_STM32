@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\Library;.\User;.\System;.\hardware;.\Net;.\CJSON</IncludePath>
+              <IncludePath>.\Start;.\Library;.\User;.\System;.\hardware;.\Net;.\CJSON;.\LCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -884,6 +884,56 @@
               <FileName>cJSON.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\CJSON\cJSON.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LCD</GroupName>
+          <Files>
+            <File>
+              <FileName>Font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\Font.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD\GUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\GUI.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD\LCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\LCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\LCD_Config.h</FilePath>
+            </File>
+            <File>
+              <FileName>Picture.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\Picture.h</FilePath>
+            </File>
+            <File>
+              <FileName>QDTFT_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD\QDTFT_demo.c</FilePath>
+            </File>
+            <File>
+              <FileName>QDTFT_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD\QDTFT_demo.h</FilePath>
             </File>
           </Files>
         </Group>

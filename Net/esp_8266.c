@@ -32,10 +32,6 @@
 #include <string.h>
 #include <stdio.h>
 
-//Á´½Ówifi
-//#define ESP8266_WIFI_INFO		"AT+CWJAP=\"ChinaNet-hvCg\",\"7wjuppeh\"\r\n"
-#define ESP8266_WIFI_INFO		"AT+CWJAP=\"Mi10\",\"zxcvbnm123\"\r\n"
-#define ESP8266_ALIYUN_INFO		"AT+CIPSTART=\"TCP\",\"h0njatWd7OS.iot-as-mqtt.cn-shanghai.aliyuncs.com\",1883\r\n"
 
 unsigned char esp8266_buf[128];
 unsigned short esp8266_cnt = 0, esp8266_cntPre = 0;

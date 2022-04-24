@@ -40,6 +40,9 @@
 ".\objects\mqttkit.o"
 ".\objects\mqtt.o"
 ".\objects\cjson.o"
+".\objects\gui.o"
+".\objects\lcd.o"
+".\objects\qdtft_demo.o"
 --library_type=microlib --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

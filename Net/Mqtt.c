@@ -158,7 +158,7 @@ void ALiYun_Publish(const char *topic, const char *msg)
 	if(MQTT_PacketPublish(MQTT_PUBLISH_ID, topic, msg, strlen(msg), MQTT_QOS_LEVEL0, 0, 1, &mqttPacket) == 0)
 	{
 		ESP8266_SendData(mqttPacket._data, mqttPacket._len);					//向平台发送订阅请求
-		UsartPrintf(USART_DEBUG, "Publish Msg: %s\r\n", msg);
+		//UsartPrintf(USART_DEBUG, "Publish Msg: %s\r\n", msg);
 		MQTT_DeleteBuffer(&mqttPacket);											//删包
 	}
 
@@ -225,11 +225,11 @@ void ALiYun_RevPro(unsigned char *cmd)
 			if(result == 0)
 			{
 				//UsartPrintf(USART_DEBUG, "topic: %s, topic_len: %d, payload: %s, payload_len: %d\r\n",
-					//												cmdid_topic, topic_len, req_payload, req_len);
+													//				cmdid_topic, topic_len, req_payload, req_len);
 				//对收到的订阅消息进行cjson解析
 				json = cJSON_Parse(req_payload);
 				if(NULL == json){
-					UsartPrintf(USART_DEBUG, "cjson parse faild!\r\n");
+					//UsartPrintf(USART_DEBUG, "cjson parse faild!\r\n");
 				}else{
 					//在这个地方暂时先用串口打印下来 后期解析到数据后可进行硬件操作       后期改用strstr判断  课 联调
 					json_value_light = cJSON_GetObjectItem(json, "StatusLightSwitch");
