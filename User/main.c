@@ -10,6 +10,7 @@
 #include "TIM.h"
 #include "SHT31.h"
 #include "LCD.h"
+#include "ADC.h"
 
 #include <stdio.h>
 //网络设备驱动
@@ -48,6 +49,8 @@ void Hardware_Init(void)
 	Usart1_Init(115200);							//串口1，打印信息用
 	
 	Usart2_Init(115200);							//串口2，驱动ESP8266用
+	
+	ADC1_Init();                                    //ADC
 									
 	LED_Init();										//LED2初始化
 	
@@ -68,16 +71,31 @@ void Hardware_Init(void)
 int main(void)
 {
 #if 0    //测试分支
-	Hardware_Init();				//初始化外围硬件
+	u16 adcx;
+	Hardware_Init();				//初始化外围硬件 lcd显示
 	float Rh_true = 0.0, Tmp_true = 0.0;
 	
 	while(1){
-		
+		adcx=Get_Adc_Average(ADC_Channel_1,10);
+		//UsartPrintf(USART_DEBUG, "ADC--0x%X\r\n",adcx);
 		GetDataFromSHT31(&Tmp_true, &Rh_true);
-		TMP_RH_INFO(Tmp_true, Rh_true);
+		TMP_RH_INFO(Tmp_true, Rh_true, &adcx);
+		//UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
+		DelayMs(500);
+	}
+
+	
+#if 0
+	Hardware_Init();				//初始化外围硬件  温度
+	float Rh_true = 0.0, Tmp_true = 0.0;
+	u8 *test = "glx521";
+	while(1){
+		GetDataFromSHT31(&Tmp_true, &Rh_true);
+		TMP_RH_INFO(Tmp_true, Rh_true, test);
 		UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
 		DelayMs(500);
 	}
+#endif
 #else
 	unsigned char *dataPtr = NULL;
 
@@ -90,6 +108,11 @@ int main(void)
 	unsigned short Led_status;
 	
 	float Rh_true = 0.0, Tmp_true = 0.0;//温湿度数据
+	
+	u16 adcx; //adc读取数据
+	
+	int Lx = 0;               // temt 6000 光照强度范围在0-1000Lux
+		
 	
 	Hardware_Init();				//初始化外围硬件
 
@@ -124,12 +147,18 @@ int main(void)
 			ALiYun_HeartBeat(&mqttPacket);			
 			timeCount = 0;
 			ESP8266_Clear();
+			//LCD显示 放在这里延缓LCD刷新时间
+			TMP_RH_INFO(Tmp_true, Rh_true, Lx);
 
 		}
 		if(timeCount%150 == 0){
 			Led_status = GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_0);//led的电平状态
 			GetDataFromSHT31(&Tmp_true, &Rh_true); //温湿度状态
-			TMP_RH_INFO(Tmp_true, Rh_true);//LCD显示
+			adcx = Get_Adc_Average(ADC_Channel_13, 10);
+			//转换成LX 实际值
+			Lx = (int)((adcx/4095.00)*1000.00);
+			
+			UsartPrintf(USART_DEBUG, "ADC--%d_lx--%d",adcx, Lx);
 			UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
 			
 			sprintf(pPayLoad_cap_control,"{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f,\"RelativeHumidity\": %.2f}",!Led_status,Tmp_true,Rh_true);

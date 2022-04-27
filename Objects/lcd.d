@@ -32,4 +32,5 @@
 .\objects\lcd.o: .\System\delay.h
 .\objects\lcd.o: LCD\LCD_Config.h
 .\objects\lcd.o: LCD\GUI.h
+.\objects\lcd.o: .\System\IWDG.h
 .\objects\lcd.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

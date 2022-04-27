@@ -661,6 +661,11 @@
               <FilePath>.\System\Delay.h</FilePath>
             </File>
             <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\ADC.c</FilePath>
+            </File>
+            <File>
               <FileName>IWDG.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\System\IWDG.c</FilePath>
@@ -679,6 +684,11 @@
               <FileName>TIM.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\System\TIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\ADC.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -721,14 +731,14 @@
               <FilePath>.\hardware\Beep.c</FilePath>
             </File>
             <File>
-              <FileName>Beep.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\hardware\Beep.h</FilePath>
-            </File>
-            <File>
               <FileName>relay.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\hardware\relay.c</FilePath>
+            </File>
+            <File>
+              <FileName>Beep.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hardware\Beep.h</FilePath>
             </File>
             <File>
               <FileName>relay.h</FileName>

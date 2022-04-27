@@ -19,6 +19,7 @@
 #define GREEN	0x07e0
 #define BLUE 	0x001f
 #define WHITE	0xffff
+#define FENSE	0xffda
 #define BLACK	0x0000
 #define YELLOW  0xFFE0
 #define GRAY0   0xEF7D   	//»ÒÉ«0 3165 00110 001011 00101
@@ -93,6 +94,6 @@ unsigned int Lcd_ReadPoint(u16 x,u16 y);
 void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end);
 void LCD_WriteData_16Bit(u16 Data);
 
-void TMP_RH_INFO(float Tmp_true, float Rh_true);
+void TMP_RH_INFO(float Tmp_true, float Rh_true, int Lx);
 
 #endif

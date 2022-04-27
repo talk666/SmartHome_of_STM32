@@ -3,7 +3,7 @@
 #include "delay.h"
 #include "LCD_Config.h"
 #include "GUI.h"
-
+#include "IWDG.h"
 #include "stdio.h"
 //液晶IO初始化配置
 void LCD_GPIO_Init(void)
@@ -35,7 +35,7 @@ void LCD_GPIO_Init(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
-	LCD_LED_SET;   //通过IO控制背光亮	
+		
 }
 
 void Lcd_Reset(void)
@@ -94,7 +94,10 @@ void LCD_WriteData_16Bit(u16 Data)
 void LCD_Init(void)
 {
 	LCD_GPIO_Init();
+	
 	Lcd_Reset(); //Reset before LCD Init.
+	
+	LCD_LED_SET;//通过IO控制背光亮
 	//LCD Init For 1.44Inch LCD Panel with ST7735R.
 	Lcd_WriteIndex(0x11);//Sleep exit 
 	DelayMs (120);
@@ -205,6 +208,8 @@ void LCD_Init(void)
 	
 	
 	Lcd_WriteIndex(0x29);//Display on	 
+	
+
 }
 /*************************************************
 函数名：LCD_Set_Region
@@ -286,15 +291,49 @@ void Lcd_Clear(u16 Color)
 	  	LCD_WriteData_16Bit(Color);
     }   
 }
+
+//固定区域填充颜色
+void Lcd_Color_filter(u16 Color, int x, int y ,int y1)               
+{	
+   unsigned int i,m;
+   Lcd_SetRegion(0,y,x-1,y-1);
+   Lcd_WriteIndex(0x2C);
+   for(i=0;i<x;i++) //横坐标 o开始到x
+    for(m=y;m<y1;m++)//纵坐标 y开始y1结束
+    {	
+	  	LCD_WriteData_16Bit(Color);
+    }   
+}
+
 //温湿度信息显示
-void TMP_RH_INFO(float Tmp_true, float Rh_true)
+void TMP_RH_INFO(float Tmp_true, float Rh_true, int Lx)
 {
+	//Lcd_Clear(GRAY0); 
 	char tmp[10] = {0},rh[10] = {0};
+	char adc[10] = {0};
 	
+	sprintf(adc,"光照 %dLx", Lx);
 	sprintf(tmp,"温度 %.2f℃",Tmp_true);
 	sprintf(rh ,"湿度 %%%.2f",Rh_true);
 	
-	//Lcd_Clear(GRAY0);
-	Gui_DrawFont_GBK24(10,50,RED,GRAY0,(u8 *)tmp);
-	Gui_DrawFont_GBK24(10,86,RED,GRAY0,(u8 *)rh);
+	char title[] = "WE_HOME";
+	char date[] = "2022-04-26";
+	
+	/*
+	DisplayButtonUp(0, 0, 127, 40);
+	DisplayButtonUp(0, 0, 127, 80);
+	DisplayButtonUp(0, 0, 127, 120);*/
+	
+	Lcd_Color_filter(RED, 128, 0 ,32);
+	Lcd_Color_filter(YELLOW, 128, 32, 64);
+	Lcd_Color_filter(GRAY1, 128, 64, 96);
+	Lcd_Color_filter(GREEN, 128, 96, 128);
+	Lcd_Color_filter(BLUE, 128, 128, 160);
+	
+	
+	Gui_DrawFont_GBK24(35,10,GRAY2,RED,(u8 *)title);
+	Gui_DrawFont_GBK24(10,36,RED,YELLOW,(u8 *)tmp);
+	Gui_DrawFont_GBK24(10,68,RED,GRAY1,(u8 *)rh);
+	Gui_DrawFont_GBK24(10,100,RED,GREEN,(u8 *)adc);
+	Gui_DrawFont_GBK24(45,140,WHITE,BLUE,(u8 *)date);
 }
