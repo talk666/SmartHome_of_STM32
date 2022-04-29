@@ -35,7 +35,7 @@
 .\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\hardware\Led.h
 .\objects\main.o: .\hardware\Beep.h
-.\objects\main.o: .\hardware\Relay.h
+.\objects\main.o: .\hardware\relay.h
 .\objects\main.o: .\System\TIM.h
 .\objects\main.o: .\hardware\SHT31.h
 .\objects\main.o: .\LCD\LCD.h

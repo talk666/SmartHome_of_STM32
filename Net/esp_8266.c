@@ -146,7 +146,7 @@ void ESP8266_SendData(unsigned char *data, unsigned short len)
 	sprintf(cmdBuf, "AT+CIPSEND=%d\r\n", len);		//发送命令
 	if(!ESP8266_SendCmd(cmdBuf, ">"))				//收到‘>’时可以发送数据
 	{
-		Usart_SendString(USART2, data, len);		//发送设备连接请求数据
+		Usart_SendString(USART_ESP8266, data, len);		//发送设备连接请求数据
 	}
 
 }
@@ -211,11 +211,12 @@ unsigned char *ESP8266_GetIPD(unsigned short timeOut)
 //==========================================================
 void ESP8266_Init(void)
 {
-	
-	GPIO_InitTypeDef GPIO_Initure;
+
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
+	/*
+	GPIO_InitTypeDef GPIO_Initure;
 	//ESP8266复位引脚
 	GPIO_Initure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Initure.GPIO_Pin = GPIO_Pin_14;					//GPIOC14-复位
@@ -226,7 +227,7 @@ void ESP8266_Init(void)
 	DelayXms(250);
 	GPIO_WriteBit(GPIOC, GPIO_Pin_14, Bit_SET);
 	DelayXms(500);
-	
+	*/
 	ESP8266_Clear();
 	
 	UsartPrintf(USART_DEBUG, "0. AT\r\n");
@@ -259,26 +260,3 @@ void ESP8266_Init(void)
 
 }
 
-//==========================================================
-//	函数名称：	USART2_IRQHandler
-//
-//	函数功能：	串口2收发中断
-//
-//	入口参数：	无
-//
-//	返回参数：	无
-//
-//	说明：		
-//==========================================================
-void USART2_IRQHandler(void)
-{
-
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) //接收中断
-	{
-		if(esp8266_cnt >= sizeof(esp8266_buf))	esp8266_cnt = 0; //防止串口被刷爆
-		esp8266_buf[esp8266_cnt++] = USART2->DR;
-		
-		USART_ClearFlag(USART2, USART_FLAG_RXNE);
-	}
-
-}

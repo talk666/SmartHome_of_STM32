@@ -6,11 +6,13 @@
 
 
 #define USART_DEBUG		    USART1		//调试打印所使用的串口组
-#define USART_ESP8266		USART2		//调试打印所使用的串口组
+#define USART_ESP8266		UART4		
 
 void Usart1_Init(unsigned int baud);
 
 void Usart2_Init(unsigned int baud);
+
+void Uart4_Init(unsigned int baud);
 
 void Usart_SendString(USART_TypeDef *USARTx, unsigned char *str, unsigned short len);
 

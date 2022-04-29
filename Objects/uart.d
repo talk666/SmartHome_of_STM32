@@ -32,3 +32,4 @@
 .\objects\uart.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\uart.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\uart.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\uart.o: .\Net\esp_8266.h

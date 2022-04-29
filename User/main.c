@@ -6,7 +6,7 @@
 #include "touch.h"
 #include "Led.h"
 #include "Beep.h"
-#include "Relay.h"
+#include "relay.h"
 #include "TIM.h"
 #include "SHT31.h"
 #include "LCD.h"
@@ -50,6 +50,8 @@ void Hardware_Init(void)
 	
 	Usart2_Init(115200);							//串口2，驱动ESP8266用
 	
+	Uart4_Init(115200);                               //串口4
+	
 	ADC1_Init();                                    //ADC
 									
 	LED_Init();										//LED2初始化
@@ -65,7 +67,6 @@ void Hardware_Init(void)
 	//TIM3_Int_Init(7199,9999);//5Khz的计数频率，计数到5000为1000ms  !!减1
 	
 	UsartPrintf(USART_DEBUG, " Hardware init OK\r\n");
-	//UsartPrintf(USART_ESP8266, " Hardware init OK\r\n");
 }
 
 int main(void)
@@ -74,29 +75,25 @@ int main(void)
 	u16 adcx;
 	Hardware_Init();				//初始化外围硬件 lcd显示
 	float Rh_true = 0.0, Tmp_true = 0.0;
-	
+	int Lx = (int)((adcx/4095.00)*1000.00);
 	while(1){
 		adcx=Get_Adc_Average(ADC_Channel_1,10);
-		//UsartPrintf(USART_DEBUG, "ADC--0x%X\r\n",adcx);
+		UsartPrintf(USART_DEBUG, "ADC--0x%X\r\n",adcx);
 		GetDataFromSHT31(&Tmp_true, &Rh_true);
-		TMP_RH_INFO(Tmp_true, Rh_true, &adcx);
-		//UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
+		TMP_RH_INFO(Tmp_true, Rh_true, Lx);
+		UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
 		DelayMs(500);
 	}
 
 	
-#if 0
-	Hardware_Init();				//初始化外围硬件  温度
-	float Rh_true = 0.0, Tmp_true = 0.0;
-	u8 *test = "glx521";
-	while(1){
-		GetDataFromSHT31(&Tmp_true, &Rh_true);
-		TMP_RH_INFO(Tmp_true, Rh_true, test);
-		UsartPrintf(USART_DEBUG, "温度--%.2f℃, 湿度--%%%.2f\r\n",Tmp_true, Rh_true);
-		DelayMs(500);
-	}
-#endif
-#else
+#elif 0
+	
+	Hardware_Init();			//初始化外围硬件  温度
+	UsartPrintf(USART_DEBUG, "ADC--0x%X\r\n");
+	ESP8266_Init();					//初始化ESP8266
+	
+
+#elif 1
 	unsigned char *dataPtr = NULL;
 
 	//阿里云自定义用于和微信小程序进行通讯的Topic
@@ -111,13 +108,11 @@ int main(void)
 	
 	u16 adcx; //adc读取数据
 	
-	int Lx = 0;               // temt 6000 光照强度范围在0-1000Lux
-		
+	static int Lx = 0;               // temt 6000 光照强度范围在0-1000Lux
 	
 	Hardware_Init();				//初始化外围硬件
 
 	ESP8266_Init();					//初始化ESP8266
-	
 	
 	
 	while(ALiYun_DevLink())			//接入ALiYun
@@ -172,7 +167,7 @@ int main(void)
 			ALiYun_RevPro(dataPtr);
 
 
-		if(Beat_fail_num == 5){
+		if(Beat_fail_num == 3){
 			
 			UsartPrintf(USART_DEBUG, "id=%d ,starting reconnect\r\n",Beat_fail_num);
 			Feed_Dog();	
@@ -181,7 +176,7 @@ int main(void)
 			while(ALiYun_DevLink())			//接入ALiYun
 				DelayXms(500);
 	
-			Beep_Flag(45); //长响代表重新连接成功
+			Beep_Flag(45); //长响代表重新连接成功 并未掉电
 			
 			ALiYun_Subscribe(topics_cap_control, 1);   //订阅主题
 			Beat_fail_num = 0;
@@ -192,7 +187,15 @@ int main(void)
 			LED2_Turn();
 			Relay_Turn();
 		}
-		
+#if 0
+		if(ubAnalogWatchdogStatus == 1 && led_flag_once)
+		{
+			//说明模拟看门狗中断执行 有阈值需要进行处理
+			//UsartPrintf(USART_DEBUG, "AD_DOG:ADC--%d_lx--%d",adcx, Lx);
+			if(Lx <= 2) Relay_ON();
+			led_flag_once = 0;
+		}
+#endif
 		DelayXms(5);
 	}
 	

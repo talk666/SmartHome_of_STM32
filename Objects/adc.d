@@ -29,3 +29,5 @@
 .\objects\adc.o: .\Library\stm32f10x_wwdg.h
 .\objects\adc.o: .\Library\misc.h
 .\objects\adc.o: System\delay.h
+.\objects\adc.o: .\hardware\uart.h
+.\objects\adc.o: .\hardware\relay.h

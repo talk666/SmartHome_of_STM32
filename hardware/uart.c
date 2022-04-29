@@ -21,7 +21,7 @@ void Usart1_Init(unsigned int baud)
 	
 	GPIO_InitTypeDef GpioInitStructure; //初始化GPIO结构体命名
 	USART_InitTypeDef UsartInitStructure;//初始化USART结构体命名
-	NVIC_InitTypeDef NVIC_InitStructure;//初始化NVIC
+	NVIC_InitTypeDef UART1_InitStructure;//初始化NVIC
 	
 	//2. 配置时钟：GPIO口的时钟，引脚复用的时钟，串口的时钟
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
@@ -42,12 +42,12 @@ void Usart1_Init(unsigned int baud)
 
 	//是否配置中断
 #if 1
-	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;//IRQ通道使能
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//优先级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	UART1_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	UART1_InitStructure.NVIC_IRQChannelCmd = ENABLE;//IRQ通道使能
+	UART1_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//优先级
+	UART1_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	
-	NVIC_Init(&NVIC_InitStructure);
+	NVIC_Init(&UART1_InitStructure);
 #endif
 	//5.串口结构体的配置
 	UsartInitStructure.USART_BaudRate = baud;        //波特率
@@ -122,6 +122,62 @@ void Usart2_Init(unsigned int baud)
 	NVIC_Init(&nvicInitStruct);
 
 }
+
+/*
+************************************************************
+*	函数名称：	Uart4_Init
+*
+*	函数功能：	串口4初始化 (esp8266)
+*
+*	入口参数：	baud：设定的波特率
+*
+*	返回参数：	无
+*
+*	说明：		TX-PC10		RX-PC11
+************************************************************
+*/
+void Uart4_Init(unsigned int baud)
+{
+
+	GPIO_InitTypeDef gpioInitStruct;
+	USART_InitTypeDef usartInitStruct;
+	NVIC_InitTypeDef nvicInitStruct;
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+	USART_DeInit(UART4);
+	//PC10	TXD
+	gpioInitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
+	gpioInitStruct.GPIO_Pin = GPIO_Pin_10;
+	gpioInitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &gpioInitStruct);
+	
+	//PC11	RXD
+	gpioInitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;//GPIO_Mode_IPU
+	gpioInitStruct.GPIO_Pin = GPIO_Pin_11;
+	gpioInitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &gpioInitStruct);
+	
+	usartInitStruct.USART_BaudRate = baud;
+	usartInitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;		//无硬件流控
+	usartInitStruct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;						//接收和发送
+	usartInitStruct.USART_Parity = USART_Parity_No;									//无校验
+	usartInitStruct.USART_StopBits = USART_StopBits_1;								//1位停止位
+	usartInitStruct.USART_WordLength = USART_WordLength_8b;							//8位数据位
+	USART_Init(UART4, &usartInitStruct);
+	
+	USART_Cmd(UART4, ENABLE);														//使能串口
+	
+	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);									//使能接收中断
+	
+	nvicInitStruct.NVIC_IRQChannel = UART4_IRQn;
+	nvicInitStruct.NVIC_IRQChannelCmd = ENABLE;
+	nvicInitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+	nvicInitStruct.NVIC_IRQChannelSubPriority = 0;
+	NVIC_Init(&nvicInitStruct);
+
+}
+
 /*
 ************************************************************
 *	函数名称：	Usart_SendString
@@ -166,7 +222,6 @@ void Usart_SendString(USART_TypeDef *USARTx, unsigned char *str, unsigned short 
 */
 void UsartPrintf(USART_TypeDef *USARTx, char *fmt,...)
 {
-
 	unsigned char UsartPrintfBuf[296];
 	va_list ap;
 	unsigned char *pStr = UsartPrintfBuf;
@@ -198,7 +253,6 @@ void UsartPrintf(USART_TypeDef *USARTx, char *fmt,...)
 */
 void USART1_IRQHandler(void)
 {
-
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) //接收中断
 	{
 		USART_ClearFlag(USART1, USART_FLAG_RXNE);
@@ -206,12 +260,66 @@ void USART1_IRQHandler(void)
 
 }
 
+#include "esp_8266.h"
+//==========================================================
+//	函数名称：	USART2_IRQHandler
+//
+//	函数功能：	串口2收发中断
+//
+//	入口参数：	无
+//
+//	返回参数：	无
+//
+//	说明：		
+//==========================================================
+void USART2_IRQHandler(void)
+{
+//UsartPrintf(USART_DEBUG, "USART2_IRQHandler\r\n");
+	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) //接收中断
+	{
+		if(esp8266_cnt >= sizeof(esp8266_buf))	esp8266_cnt = 0; //防止串口被刷爆
+		esp8266_buf[esp8266_cnt++] = USART2->DR;
+		
+		USART_ClearFlag(USART2, USART_FLAG_RXNE);
+	}
+
+}
+
+/************************************************************
+*	函数名称：	UART4_IRQHandler
+*
+*	函数功能：	串口4收发中断
+*
+*	入口参数：	无
+*
+*	返回参数：	无
+*
+*	说明：		
+************************************************************/
+void UART4_IRQHandler(void) //中断接收处理函数；
+{
+	//u8 res;
+//	UsartPrintf(USART_DEBUG, "UART4_IRQHandler\r\n");
+    if(USART_GetITStatus(UART4, USART_IT_RXNE) != RESET) //接收中断
+	{
+		
+		if(esp8266_cnt >= sizeof(esp8266_buf))	esp8266_cnt = 0; //防止串口被刷爆
+		esp8266_buf[esp8266_cnt++] = UART4->DR;
+
+		//UsartPrintf(USART_DEBUG, (char *)esp8266_buf);
+		/*
+		res = USART_ReceiveData(UART4);
+		USART_SendData(USART1,res);
+		*/
+		USART_ClearFlag(UART4, USART_FLAG_RXNE);
+	}
+}
 
 //发送字符函数
 void USARTSendByte(USART_TypeDef* USARTx, uint16_t Data)
 {
-		USART_SendData( USARTx,  Data);
-		while( USART_GetFlagStatus( USARTx,  USART_FLAG_TXE) == RESET);//USART_GetFlagStatus是判断标志位 USART_FLAG_TXE 去usart.h  FLAG找
+	USART_SendData( USARTx,  Data);
+	while( USART_GetFlagStatus( USARTx,  USART_FLAG_TXE) == RESET);//USART_GetFlagStatus是判断标志位 USART_FLAG_TXE 去usart.h  FLAG找
 }
 //发送字符串函数
 void USARTSendString( USART_TypeDef* USARTx, char *str)
