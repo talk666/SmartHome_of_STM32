@@ -2037,32 +2037,32 @@ Image Symbol Table
     i.internal_alloc                         0x080050a0   Section        0  mallocr.o(i.internal_alloc)
     internal_alloc                           0x080050a1   Thumb Code    76  mallocr.o(i.internal_alloc)
     i.main                                   0x080050f0   Section        0  main.o(i.main)
-    i.parse_array                            0x08005338   Section        0  cjson.o(i.parse_array)
-    parse_array                              0x08005339   Thumb Code   248  cjson.o(i.parse_array)
-    i.parse_hex4                             0x08005430   Section        0  cjson.o(i.parse_hex4)
-    parse_hex4                               0x08005431   Thumb Code    90  cjson.o(i.parse_hex4)
-    i.parse_number                           0x0800548c   Section        0  cjson.o(i.parse_number)
-    parse_number                             0x0800548d   Thumb Code   298  cjson.o(i.parse_number)
-    i.parse_object                           0x080055c4   Section        0  cjson.o(i.parse_object)
-    parse_object                             0x080055c5   Thumb Code   318  cjson.o(i.parse_object)
-    i.parse_string                           0x08005702   Section        0  cjson.o(i.parse_string)
-    parse_string                             0x08005703   Thumb Code   396  cjson.o(i.parse_string)
-    i.parse_value                            0x08005890   Section        0  cjson.o(i.parse_value)
-    parse_value                              0x08005891   Thumb Code   290  cjson.o(i.parse_value)
-    i.realloc                                0x080059cc   Section        0  mallocr.o(i.realloc)
-    i.skip_utf8_bom                          0x08005a38   Section        0  cjson.o(i.skip_utf8_bom)
-    skip_utf8_bom                            0x08005a39   Thumb Code    56  cjson.o(i.skip_utf8_bom)
-    i.strtod                                 0x08005a74   Section        0  strtod.o(i.strtod)
-    i.utf16_literal_to_utf8                  0x08005a90   Section        0  cjson.o(i.utf16_literal_to_utf8)
-    utf16_literal_to_utf8                    0x08005a91   Thumb Code   300  cjson.o(i.utf16_literal_to_utf8)
-    .constdata                               0x08005bbc   Section        4  main.o(.constdata)
-    .constdata                               0x08005bc0   Section     4938  gui.o(.constdata)
-    .constdata                               0x08006f0a   Section      129  ctype_o.o(.constdata)
-    .constdata                               0x08006f8c   Section        4  ctype_o.o(.constdata)
-    table                                    0x08006f8c   Data           4  ctype_o.o(.constdata)
-    .conststring                             0x08006f90   Section      122  main.o(.conststring)
-    .conststring                             0x0800700c   Section       76  esp_8266.o(.conststring)
-    .conststring                             0x08007058   Section       71  mqtt.o(.conststring)
+    i.parse_array                            0x08005344   Section        0  cjson.o(i.parse_array)
+    parse_array                              0x08005345   Thumb Code   248  cjson.o(i.parse_array)
+    i.parse_hex4                             0x0800543c   Section        0  cjson.o(i.parse_hex4)
+    parse_hex4                               0x0800543d   Thumb Code    90  cjson.o(i.parse_hex4)
+    i.parse_number                           0x08005498   Section        0  cjson.o(i.parse_number)
+    parse_number                             0x08005499   Thumb Code   298  cjson.o(i.parse_number)
+    i.parse_object                           0x080055d0   Section        0  cjson.o(i.parse_object)
+    parse_object                             0x080055d1   Thumb Code   318  cjson.o(i.parse_object)
+    i.parse_string                           0x0800570e   Section        0  cjson.o(i.parse_string)
+    parse_string                             0x0800570f   Thumb Code   396  cjson.o(i.parse_string)
+    i.parse_value                            0x0800589c   Section        0  cjson.o(i.parse_value)
+    parse_value                              0x0800589d   Thumb Code   290  cjson.o(i.parse_value)
+    i.realloc                                0x080059d8   Section        0  mallocr.o(i.realloc)
+    i.skip_utf8_bom                          0x08005a44   Section        0  cjson.o(i.skip_utf8_bom)
+    skip_utf8_bom                            0x08005a45   Thumb Code    56  cjson.o(i.skip_utf8_bom)
+    i.strtod                                 0x08005a80   Section        0  strtod.o(i.strtod)
+    i.utf16_literal_to_utf8                  0x08005a9c   Section        0  cjson.o(i.utf16_literal_to_utf8)
+    utf16_literal_to_utf8                    0x08005a9d   Thumb Code   300  cjson.o(i.utf16_literal_to_utf8)
+    .constdata                               0x08005bc8   Section        4  main.o(.constdata)
+    .constdata                               0x08005bcc   Section     4938  gui.o(.constdata)
+    .constdata                               0x08006f16   Section      129  ctype_o.o(.constdata)
+    .constdata                               0x08006f98   Section        4  ctype_o.o(.constdata)
+    table                                    0x08006f98   Data           4  ctype_o.o(.constdata)
+    .conststring                             0x08006f9c   Section      137  main.o(.conststring)
+    .conststring                             0x08007028   Section       76  esp_8266.o(.conststring)
+    .conststring                             0x08007074   Section       71  mqtt.o(.conststring)
     .data                                    0x20000000   Section       20  stm32f10x_rcc.o(.data)
     APBAHBPrescTable                         0x20000000   Data          16  stm32f10x_rcc.o(.data)
     ADCPrescTable                            0x20000010   Data           4  stm32f10x_rcc.o(.data)
@@ -2436,16 +2436,16 @@ Image Symbol Table
     cJSON_ParseWithLengthOpts                0x08004ed1   Thumb Code   204  cjson.o(i.cJSON_ParseWithLengthOpts)
     cJSON_ParseWithOpts                      0x08004fa5   Thumb Code    40  cjson.o(i.cJSON_ParseWithOpts)
     crc8                                     0x08005015   Thumb Code    54  sht31.o(i.crc8)
-    main                                     0x080050f1   Thumb Code   446  main.o(i.main)
-    realloc                                  0x080059cd   Thumb Code   102  mallocr.o(i.realloc)
-    strtod                                   0x08005a75   Thumb Code    28  strtod.o(i.strtod)
-    asc16                                    0x08005bc0   Data        1521  gui.o(.constdata)
-    sz32                                     0x080061b1   Data        1921  gui.o(.constdata)
-    hz16                                     0x08006932   Data         238  gui.o(.constdata)
-    hz24                                     0x08006a20   Data        1258  gui.o(.constdata)
-    __ctype_table                            0x08006f0a   Data         129  ctype_o.o(.constdata)
-    Region$$Table$$Base                      0x080070a0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080070c0   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x080050f1   Thumb Code   458  main.o(i.main)
+    realloc                                  0x080059d9   Thumb Code   102  mallocr.o(i.realloc)
+    strtod                                   0x08005a81   Thumb Code    28  strtod.o(i.strtod)
+    asc16                                    0x08005bcc   Data        1521  gui.o(.constdata)
+    sz32                                     0x080061bd   Data        1921  gui.o(.constdata)
+    hz16                                     0x0800693e   Data         238  gui.o(.constdata)
+    hz24                                     0x08006a2c   Data        1258  gui.o(.constdata)
+    __ctype_table                            0x08006f16   Data         129  ctype_o.o(.constdata)
+    Region$$Table$$Base                      0x080070bc   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080070dc   Number         0  anon$$obj.o(Region$$Table)
     UsCount                                  0x20000014   Data           1  delay.o(.data)
     MsCount                                  0x20000016   Data           2  delay.o(.data)
     ubAnalogWatchdogStatus                   0x20000018   Data           1  adc.o(.data)
@@ -2467,9 +2467,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000710c, Max: 0x00020000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00007128, Max: 0x00020000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000070c0, Max: 0x00020000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000070dc, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2721,50 +2721,50 @@ Memory Map of the image
     0x0800504a   0x0800504a   0x00000004   Code   RO         4166    i.get_decimal_point  cjson.o
     0x0800504e   0x0800504e   0x00000052   Code   RO         4167    i.get_object_item   cjson.o
     0x080050a0   0x080050a0   0x00000050   Code   RO         5260    i.internal_alloc    mc_w.l(mallocr.o)
-    0x080050f0   0x080050f0   0x00000248   Code   RO         3659    i.main              main.o
-    0x08005338   0x08005338   0x000000f8   Code   RO         4169    i.parse_array       cjson.o
-    0x08005430   0x08005430   0x0000005a   Code   RO         4170    i.parse_hex4        cjson.o
-    0x0800548a   0x0800548a   0x00000002   PAD
-    0x0800548c   0x0800548c   0x00000138   Code   RO         4171    i.parse_number      cjson.o
-    0x080055c4   0x080055c4   0x0000013e   Code   RO         4172    i.parse_object      cjson.o
-    0x08005702   0x08005702   0x0000018c   Code   RO         4173    i.parse_string      cjson.o
-    0x0800588e   0x0800588e   0x00000002   PAD
-    0x08005890   0x08005890   0x0000013c   Code   RO         4174    i.parse_value       cjson.o
-    0x080059cc   0x080059cc   0x0000006c   Code   RO         5261    i.realloc           mc_w.l(mallocr.o)
-    0x08005a38   0x08005a38   0x0000003c   Code   RO         4185    i.skip_utf8_bom     cjson.o
-    0x08005a74   0x08005a74   0x0000001c   Code   RO         4965    i.strtod            m_ws.l(strtod.o)
-    0x08005a90   0x08005a90   0x0000012c   Code   RO         4188    i.utf16_literal_to_utf8  cjson.o
-    0x08005bbc   0x08005bbc   0x00000004   Data   RO         3660    .constdata          main.o
-    0x08005bc0   0x08005bc0   0x0000134a   Data   RO         4756    .constdata          gui.o
-    0x08006f0a   0x08006f0a   0x00000081   Data   RO         5366    .constdata          mc_w.l(ctype_o.o)
-    0x08006f8b   0x08006f8b   0x00000001   PAD
-    0x08006f8c   0x08006f8c   0x00000004   Data   RO         5367    .constdata          mc_w.l(ctype_o.o)
-    0x08006f90   0x08006f90   0x0000007a   Data   RO         3661    .conststring        main.o
-    0x0800700a   0x0800700a   0x00000002   PAD
-    0x0800700c   0x0800700c   0x0000004c   Data   RO         3788    .conststring        esp_8266.o
-    0x08007058   0x08007058   0x00000047   Data   RO         4034    .conststring        mqtt.o
-    0x0800709f   0x0800709f   0x00000001   PAD
-    0x080070a0   0x080070a0   0x00000020   Data   RO         5402    Region$$Table       anon$$obj.o
+    0x080050f0   0x080050f0   0x00000254   Code   RO         3659    i.main              main.o
+    0x08005344   0x08005344   0x000000f8   Code   RO         4169    i.parse_array       cjson.o
+    0x0800543c   0x0800543c   0x0000005a   Code   RO         4170    i.parse_hex4        cjson.o
+    0x08005496   0x08005496   0x00000002   PAD
+    0x08005498   0x08005498   0x00000138   Code   RO         4171    i.parse_number      cjson.o
+    0x080055d0   0x080055d0   0x0000013e   Code   RO         4172    i.parse_object      cjson.o
+    0x0800570e   0x0800570e   0x0000018c   Code   RO         4173    i.parse_string      cjson.o
+    0x0800589a   0x0800589a   0x00000002   PAD
+    0x0800589c   0x0800589c   0x0000013c   Code   RO         4174    i.parse_value       cjson.o
+    0x080059d8   0x080059d8   0x0000006c   Code   RO         5261    i.realloc           mc_w.l(mallocr.o)
+    0x08005a44   0x08005a44   0x0000003c   Code   RO         4185    i.skip_utf8_bom     cjson.o
+    0x08005a80   0x08005a80   0x0000001c   Code   RO         4965    i.strtod            m_ws.l(strtod.o)
+    0x08005a9c   0x08005a9c   0x0000012c   Code   RO         4188    i.utf16_literal_to_utf8  cjson.o
+    0x08005bc8   0x08005bc8   0x00000004   Data   RO         3660    .constdata          main.o
+    0x08005bcc   0x08005bcc   0x0000134a   Data   RO         4756    .constdata          gui.o
+    0x08006f16   0x08006f16   0x00000081   Data   RO         5366    .constdata          mc_w.l(ctype_o.o)
+    0x08006f97   0x08006f97   0x00000001   PAD
+    0x08006f98   0x08006f98   0x00000004   Data   RO         5367    .constdata          mc_w.l(ctype_o.o)
+    0x08006f9c   0x08006f9c   0x00000089   Data   RO         3661    .conststring        main.o
+    0x08007025   0x08007025   0x00000003   PAD
+    0x08007028   0x08007028   0x0000004c   Data   RO         3788    .conststring        esp_8266.o
+    0x08007074   0x08007074   0x00000047   Data   RO         4034    .conststring        mqtt.o
+    0x080070bb   0x080070bb   0x00000001   PAD
+    0x080070bc   0x080070bc   0x00000020   Data   RO         5402    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080070c0, Size: 0x000006d0, Max: 0x00010000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080070dc, Size: 0x000006d0, Max: 0x00010000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080070c0   0x00000014   Data   RW         1814    .data               stm32f10x_rcc.o
-    0x20000014   0x080070d4   0x00000004   Data   RW         3254    .data               delay.o
-    0x20000018   0x080070d8   0x00000001   Data   RW         3291    .data               adc.o
-    0x20000019   0x080070d9   0x00000003   PAD
-    0x2000001c   0x080070dc   0x00000008   Data   RW         3662    .data               main.o
-    0x20000024   0x080070e4   0x00000004   Data   RW         3789    .data               esp_8266.o
-    0x20000028   0x080070e8   0x00000002   Data   RW         4035    .data               mqtt.o
-    0x2000002a   0x080070ea   0x00000002   PAD
-    0x2000002c   0x080070ec   0x00000014   Data   RW         4190    .data               cjson.o
-    0x20000040   0x08007100   0x00000004   Data   RW         5335    .data               mc_w.l(mvars.o)
-    0x20000044   0x08007104   0x00000004   Data   RW         5336    .data               mc_w.l(mvars.o)
-    0x20000048   0x08007108   0x00000004   Data   RW         5340    .data               mc_w.l(errno.o)
+    0x20000000   0x080070dc   0x00000014   Data   RW         1814    .data               stm32f10x_rcc.o
+    0x20000014   0x080070f0   0x00000004   Data   RW         3254    .data               delay.o
+    0x20000018   0x080070f4   0x00000001   Data   RW         3291    .data               adc.o
+    0x20000019   0x080070f5   0x00000003   PAD
+    0x2000001c   0x080070f8   0x00000008   Data   RW         3662    .data               main.o
+    0x20000024   0x08007100   0x00000004   Data   RW         3789    .data               esp_8266.o
+    0x20000028   0x08007104   0x00000002   Data   RW         4035    .data               mqtt.o
+    0x2000002a   0x08007106   0x00000002   PAD
+    0x2000002c   0x08007108   0x00000014   Data   RW         4190    .data               cjson.o
+    0x20000040   0x0800711c   0x00000004   Data   RW         5335    .data               mc_w.l(mvars.o)
+    0x20000044   0x08007120   0x00000004   Data   RW         5336    .data               mc_w.l(mvars.o)
+    0x20000048   0x08007124   0x00000004   Data   RW         5340    .data               mc_w.l(errno.o)
     0x2000004c        -       0x00000080   Zero   RW         3787    .bss                esp_8266.o
-    0x200000cc   0x0800710c   0x00000004   PAD
+    0x200000cc   0x08007128   0x00000004   PAD
     0x200000d0        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_md.o
     0x200002d0        -       0x00000400   Zero   RW            1    STACK               startup_stm32f10x_md.o
 
@@ -2786,7 +2786,7 @@ Image component sizes
         46          0          0          0          0        935   iwdg.o
       1404        110          0          0          0       6319   lcd.o
        148         18          0          0          0       2196   led.o
-       684        162        126          8          0       3495   main.o
+       696        162        141          8          0       3495   main.o
        132         22          0          0          0     231591   misc.o
       1922        902         71          2          0       6917   mqtt.o
       3148        102          0          0          0      20210   mqttkit.o
@@ -2807,9 +2807,9 @@ Image component sizes
        818         60          0          0          0       6133   uart.o
 
     ----------------------------------------------------------------------
-     16982       2220       5550         64       1668     465527   Object Totals
+     16994       2220       5566         64       1668     465527   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        46          0          3          5          4          0   (incl. Padding)
+        46          0          4          5          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -2890,15 +2890,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     23180       2388       5684         76       1668     459031   Grand Totals
-     23180       2388       5684         76       1668     459031   ELF Image Totals
-     23180       2388       5684         76          0          0   ROM Totals
+     23192       2388       5700         76       1668     459031   Grand Totals
+     23192       2388       5700         76       1668     459031   ELF Image Totals
+     23192       2388       5700         76          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                28864 (  28.19kB)
+    Total RO  Size (Code + RO Data)                28892 (  28.21kB)
     Total RW  Size (RW Data + ZI Data)              1744 (   1.70kB)
-    Total ROM Size (Code + RO Data + RW Data)      28940 (  28.26kB)
+    Total ROM Size (Code + RO Data + RW Data)      28968 (  28.29kB)
 
 ==============================================================================
 

@@ -155,8 +155,9 @@ int main(void)
 			
 			UsartPrintf(USART_DEBUG, "ADC--%d_lx--%d",adcx, Lx);
 			UsartPrintf(USART_DEBUG, "ÎÂ¶È--%.2f¡æ, Êª¶È--%%%.2f\r\n",Tmp_true, Rh_true);
-			
-			sprintf(pPayLoad_cap_control,"{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f,\"RelativeHumidity\": %.2f}",!Led_status,Tmp_true,Rh_true);
+				
+
+			sprintf(pPayLoad_cap_control,ESP8266_REPORT_MESSAGE_CONTROL,!Led_status,Tmp_true,Rh_true,Lx);
 			ALiYun_Publish(topics_cap_control[0], pPayLoad_cap_control);
 			ESP8266_Clear();
 			

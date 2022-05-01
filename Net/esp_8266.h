@@ -13,6 +13,8 @@
 #endif
 #define ESP8266_ALIYUN_INFO		"AT+CIPSTART=\"TCP\",\"h0njatWd7OS.iot-as-mqtt.cn-shanghai.aliyuncs.com\",1883\r\n"
 
+//上报同步信息
+#define ESP8266_REPORT_MESSAGE_CONTROL "{\"StatusLightSwitch\" : %d,\"TargetTemperature\": %.2f,\"RelativeHumidity\": %.2f,\"LightLux\": %d}"
 
 extern unsigned char esp8266_buf[128];
 extern unsigned short esp8266_cnt, esp8266_cntPre;
